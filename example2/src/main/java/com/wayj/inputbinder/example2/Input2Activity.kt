@@ -28,10 +28,10 @@ class Input2Activity : AppCompatActivity() {
         inputBinder = InputBinder(this)
         inputBinder.engine.callBack = InputBinderEngine.CallBack { }
         inputBinder.setRootView(this).setRelationEntity(Student::class.java)
-        val buttonInputItem = ButtonInputItem(R.id.input_btn, "点我一下，代码赋值")
-        buttonInputItem.setOnClickListener { Toast.makeText(this@Input2Activity, "点击了一下", Toast.LENGTH_SHORT).show() }
-        buttonInputItem.setDisplayText("点一下试试看")
-        inputBinder.addInputItem(buttonInputItem)
+//        val buttonInputItem = ButtonInputItem(R.id.input_btn, "点我一下，代码赋值")
+//        buttonInputItem.setOnClickListener { Toast.makeText(this@Input2Activity, "点击了一下", Toast.LENGTH_SHORT).show() }
+//        buttonInputItem.setDisplayText("点一下试试看")
+//        inputBinder.addInputItem(buttonInputItem)
 
         //模拟请求接口获得数据并显示
         doRequestAndShow()

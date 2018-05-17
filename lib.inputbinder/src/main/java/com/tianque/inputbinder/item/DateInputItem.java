@@ -13,27 +13,27 @@ public class DateInputItem extends ButtonInputItem {
 
     private String format;
 
-    public DateInputItem(int resourceId) {
-        super(resourceId);
+    public DateInputItem(String resourceTag) {
+        super(resourceTag);
     }
 
-    public DateInputItem(int resourceId, Date date) {
-        this(resourceId);
+    public DateInputItem(String resourceTag, Date date) {
+        this(resourceTag);
         setDisplayText(TimeUtils.getDateAsString(date,getFormat()));
     }
 
-    public DateInputItem(int resourceId, Date date,String format){
-        this(resourceId);
+    public DateInputItem(String resourceTag, Date date,String format){
+        this(resourceTag);
         setFormat(format);
         setDisplayText(TimeUtils.getDateAsString(date,format));
     }
 
-    public DateInputItem(int resourceId,String date,String format){
-        this(resourceId,new Date(date),format);
+    public DateInputItem(String resourceTag,String date,String format){
+        this(resourceTag,new Date(date),format);
     }
 
-    public DateInputItem(int resourceId,String date){
-        this(resourceId);
+    public DateInputItem(String resourceTag,String date){
+        this(resourceTag);
         setDisplayText(date);
     }
 

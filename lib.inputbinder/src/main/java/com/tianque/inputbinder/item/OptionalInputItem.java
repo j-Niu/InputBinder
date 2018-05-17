@@ -24,8 +24,8 @@ public class OptionalInputItem extends ButtonInputItem {
     private int selectedIndex = -1;
 
 
-    public OptionalInputItem(int resourceId) {
-        super(resourceId);
+    public OptionalInputItem(String resourceTag) {
+        super(resourceTag);
     }
 
 

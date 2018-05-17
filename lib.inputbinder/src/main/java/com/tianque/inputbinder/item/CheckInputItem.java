@@ -12,6 +12,7 @@ import com.tianque.inputbinder.util.ResourceUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CheckInputItem extends InputItem<Boolean> {
@@ -20,8 +21,8 @@ public class CheckInputItem extends InputItem<Boolean> {
 
     private CheckBox.OnCheckedChangeListener onCheckedChangeListener;
     private boolean isChecked;
-    private List<Integer> mDependedView;//依赖该inputItem来控制是否显示的view的集合,该控件为true时，这个集合中控件都显示
-    private List<Integer> mDependedInversionView;//依赖该inputItem来控制是否显示的view的集合，该控件为true时，这个集合中控件都不显示
+    private List<String> mDependedView;//依赖该inputItem来控制是否显示的view的集合,该控件为true时，这个集合中控件都显示
+    private List<String> mDependedInversionView;//依赖该inputItem来控制是否显示的view的集合，该控件为true时，这个集合中控件都不显示
 
     /**
      * 该inputItem获得提交参数时候，选中不选中各对应的传递的值
@@ -32,12 +33,12 @@ public class CheckInputItem extends InputItem<Boolean> {
     private static final String defaultCheckValues3 = "FALSE" + SEPARATOR + "TRUE";
     private String[] checkValues;
 
-    public CheckInputItem(int resourceId) {
-        super(resourceId);
+    public CheckInputItem(String resourceTag) {
+        super(resourceTag);
     }
 
-    public CheckInputItem(int resourceId, boolean isChecked) {
-        this(resourceId);
+    public CheckInputItem(String resourceTag, boolean isChecked) {
+        this(resourceTag);
         setChecked(isChecked);
     }
 
@@ -86,11 +87,7 @@ public class CheckInputItem extends InputItem<Boolean> {
             if (dependent.length() > 0) {
                 if (mDependedView == null)
                     mDependedView = new ArrayList<>();
-                for (String viewName : dependents) {
-                    int id = ResourceUtils.findIdByName(ContextUtils.getApplicationContext(), viewName);
-                    if (id > 0)
-                        mDependedView.add(id);
-                }
+                mDependedView.addAll(Arrays.asList(dependents));
             }
         }
         if (!TextUtils.isEmpty(getConfigParm(ParmTag_dependent_inversion))) {
@@ -105,11 +102,7 @@ public class CheckInputItem extends InputItem<Boolean> {
             if (dependent.length() > 0) {
                 if (mDependedInversionView == null)
                     mDependedInversionView = new ArrayList<>();
-                for (String viewName : dependents) {
-                    int id = ResourceUtils.findIdByName(ContextUtils.getApplicationContext(), viewName);
-                    if (id > 0)
-                        mDependedInversionView.add(id);
-                }
+                mDependedInversionView.addAll(Arrays.asList(dependents));
             }
         }
         if (isStarted)
@@ -124,15 +117,15 @@ public class CheckInputItem extends InputItem<Boolean> {
 
     private void refreshDependedView() {
         if (getInputItemHand() != null && mDependedView != null && mDependedView.size() > 0) {
-            for (Integer id : mDependedView) {
-                View view = getInputItemHand().findViewById(id);
+            for (String viewName : mDependedView) {
+                View view = getInputItemHand().findViewWithTag(viewName);
                 if (view != null)
                     view.setVisibility(isChecked ? View.VISIBLE : View.GONE);
             }
         }
         if (getInputItemHand() != null && mDependedInversionView != null && mDependedInversionView.size() > 0) {
-            for (Integer id : mDependedInversionView) {
-                View view = getInputItemHand().findViewById(id);
+            for (String viewName : mDependedInversionView) {
+                View view = getInputItemHand().findViewWithTag(viewName);
                 if (view != null)
                     view.setVisibility(!isChecked ? View.VISIBLE : View.GONE);
             }
@@ -212,26 +205,26 @@ public class CheckInputItem extends InputItem<Boolean> {
     }
 
 
-    public void addDependedView(int viewResId) {
+    public void addDependedView(String viewName) {
         if (mDependedView == null) {
             mDependedView = new ArrayList<>();
         }
-        mDependedView.add(viewResId);
+        mDependedView.add(viewName);
     }
 
-    public List<Integer> getDependedView() {
+    public List<String> getDependedView() {
         return mDependedView;
     }
 
-    public List<Integer> getDependedInversionView() {
+    public List<String> getDependedInversionView() {
         return mDependedInversionView;
     }
 
-    public void addDependedInversionView(int viewResId) {
+    public void addDependedInversionView(String viewName) {
         if (mDependedInversionView == null) {
             mDependedInversionView = new ArrayList<>();
         }
-        mDependedInversionView.add(viewResId);
+        mDependedInversionView.add(viewName);
     }
 
 

@@ -28,7 +28,7 @@ public abstract class InputItem<T> {
     private final String INVISIBLE = "invisible";
     protected boolean isStarted;
 
-    private int resourceId;
+    private String resourceTag;
 
     private ViewProxyInterface<T> viewProxy;
     private InputItemHand inputItemHand;
@@ -43,16 +43,16 @@ public abstract class InputItem<T> {
 
     }
 
-    public InputItem(int resourceId) {
-        this.resourceId = resourceId;
+    public InputItem(String resourceTag) {
+        this.resourceTag = resourceTag;
     }
 
-    public int getResourceId() {
-        return resourceId;
+    public String getResourceTag() {
+        return resourceTag;
     }
 
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
+    public void setResourceTag(String resourceTag) {
+        this.resourceTag = resourceTag;
     }
 
 //    public String getResourceName() {

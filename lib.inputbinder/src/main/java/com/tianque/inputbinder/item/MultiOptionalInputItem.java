@@ -16,8 +16,8 @@ public class MultiOptionalInputItem extends ButtonInputItem {
     private String[] optionalValues;
     private boolean[] selectedIndex;
 
-    public MultiOptionalInputItem(int resourceId) {
-        super(resourceId);
+    public MultiOptionalInputItem(String resourceTag) {
+        super(resourceTag);
     }
 
     @Override

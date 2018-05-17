@@ -10,7 +10,6 @@ import com.tianque.inputbinder.item.InputItem;
 import com.tianque.inputbinder.model.InputReaderInf;
 import com.tianque.inputbinder.model.ViewAttribute;
 import com.tianque.inputbinder.util.Logging;
-import com.tianque.inputbinder.util.ResourceUtils;
 import com.tianque.inputbinder.util.ToastUtils;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
@@ -96,7 +95,7 @@ public class InputBinderEngine {
     public void addInputItems(List<InputItem> items) {
         if (items != null) {
             for (InputItem item : items) {
-                this.inputItems.put(mContext.getResources().getResourceName(item.getResourceId()), item);
+                this.inputItems.put(item.getResourceTag(), item);
             }
         }
     }
@@ -107,11 +106,11 @@ public class InputBinderEngine {
 
     private void setUp(List<ViewAttribute> attrs) {
         for (ViewAttribute attr : attrs) {
-            attr.viewId = ResourceUtils.findIdByName(mContext, attr.viewName);
-            if(attr.viewId<=0){
-                Logging.e(Tag, "item:" + attr.key + "；viewName:" + attr.viewName + ",无法找到对应视图");
-                continue;
-            }
+//            attr.viewId = ResourceUtils.findIdByName(mContext, attr.viewName);
+//            if(attr.viewId<=0){
+//                Logging.e(Tag, "item:" + attr.key + "；viewName:" + attr.viewName + ",无法找到对应视图");
+//                continue;
+//            }
             inputItems.put(attr.key, handleAttr(attr));
         }
     }
@@ -122,7 +121,7 @@ public class InputBinderEngine {
         for (Map.Entry<String, InputItem> entry : inputItems.entrySet()) {
             InputItem item = entry.getValue();
             ViewAttribute attr = item.getViewAttribute();
-            View view = rootView.findViewById(item.getResourceId());
+            View view = rootView.findViewWithTag(item.getResourceTag());
             if (view != null) {
                 execute(view, attr, item);
             } else {
@@ -155,8 +154,8 @@ public class InputBinderEngine {
                 Class<? extends InputItem> cla = InputBinder.inputTypeStoreMap.get(attr.type);
                 if (cla != null) {
                     try {
-                        Constructor c = cla.getConstructor(int.class);//获取有参构造
-                        item = (InputItem) c.newInstance(attr.viewId);    //通过有参构造创建对象
+                        Constructor c = cla.getConstructor(String.class);//获取有参构造
+                        item = (InputItem) c.newInstance(attr.key);    //通过有参构造创建对象
 //                        item = cla.newInstance();
 //                        if (item != null) {
 //                            item.setResourceId(attr.viewId);
@@ -176,7 +175,6 @@ public class InputBinderEngine {
         item.setRequestKey(attr.requestKey);
         item.setViewAttribute(attr);
         return item;
-
     }
 
 
@@ -234,7 +232,7 @@ public class InputBinderEngine {
                 continue;
             //放数据
 //            if (inputItem.getInputType() == BehaviorType.Text || inputItem.getInputType() == BehaviorType.Button) {
-//                View view = rootView.findViewById(inputItem.getResourceId());
+//                View view = rootView.findViewById(inputItem.getResourceTag());
 //                String value;
 //                if (view == null) {
 //                    continue;
@@ -412,8 +410,8 @@ public class InputBinderEngine {
         }
 
         @Override
-        public View findViewById(int id) {
-            return rootView.findViewById(id);
+        public View findViewWithTag(String tag) {
+            return rootView.findViewWithTag(tag);
         }
     };
 }

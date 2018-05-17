@@ -13,12 +13,12 @@ public class TextInputItem extends InputItem<String> {
 
     private String displayText;
 
-    public TextInputItem(int resourceId) {
-        super(resourceId);
+    public TextInputItem(String resourceTag) {
+        super(resourceTag);
     }
 
-    public TextInputItem(int resourceId, String displayText) {
-        this(resourceId);
+    public TextInputItem(String resourceTag, String displayText) {
+        this(resourceTag);
         setDisplayText(displayText);
     }
 

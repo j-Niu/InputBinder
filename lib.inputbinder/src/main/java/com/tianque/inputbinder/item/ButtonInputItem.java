@@ -5,12 +5,12 @@ import android.view.View;
 public class ButtonInputItem extends TextInputItem {
     private View.OnClickListener onClickListener;
 
-    public ButtonInputItem(int resourceId) {
-        super(resourceId);
+    public ButtonInputItem(String resourceTag) {
+        super(resourceTag);
     }
 
-    public ButtonInputItem(int resourceId, String displayText) {
-        this(resourceId);
+    public ButtonInputItem(String resourceTag, String displayText) {
+        this(resourceTag);
         setDisplayText(displayText);
     }
 
